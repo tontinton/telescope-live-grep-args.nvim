@@ -133,6 +133,11 @@ telescope.setup {
         i = {
           ["<C-k>"] = lga_actions.quote_prompt(),
           ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+          ["<C-I>"] = lga_actions.quote_prompt({
+            postfix = function()
+              return ' --iglob "' .. vim.fn.expand('%:h') .. '/**"'
+            end,
+          }),
         },
       },
       -- ... also accepts theme settings, for example:
