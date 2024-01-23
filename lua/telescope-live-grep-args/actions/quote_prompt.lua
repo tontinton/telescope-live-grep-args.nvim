@@ -11,6 +11,14 @@ local default_opts = {
   trim = true,
 }
 
+local function get_postfix(arg, prompt)
+  if type(arg) == "function" then
+    return arg(prompt)
+  else
+    return arg
+  end
+end
+
 return function(opts)
   opts = opts or {}
   opts = vim.tbl_extend("force", default_opts, opts)
@@ -21,7 +29,8 @@ return function(opts)
     if opts.trim then
       prompt = vim.trim(prompt)
     end
-    prompt = helpers.quote(prompt, { quote_char = opts.quote_char }) .. opts.postfix
+    local postfix = get_postfix(opts.postfix)
+    prompt = helpers.quote(prompt, { quote_char = opts.quote_char }) .. postfix
     picker:set_prompt(prompt)
   end
 end
